@@ -1,0 +1,130 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University Assignment Title Page 
+% LaTeX Template
+% Version 1.0 (27/12/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (http://en.wikibooks.org/wiki/LaTeX/Title_Creation)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+% Instructions for using this template:
+% This title page is capable of being compiled as is. This is not useful for 
+% including it in another document. To do this, you have two options: 
+%
+% 1) Copy/paste everything between \begin{document} and \end{document} 
+% starting at \begin{titlepage} and paste this into another LaTeX file where you 
+% want your title page.
+% OR
+% 2) Remove everything outside the \begin{titlepage} and \end{titlepage} and 
+% move this file to the same directory as the LaTeX file you wish to add it to. 
+% Then add \input{./title_page_1.tex} to your LaTeX file where you want your
+% title page.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\title{Title page with logo}
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+\usepackage[portuguese]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Universidade Federal da Bahia}\\[1.5cm] 
+\textsc{\Large ENGA73 - Sistemas Robóticos}\\[0.5cm] 
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Cinemática e planejamento de trajetória do UR5}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Discentes:} \\
+{\normalsize
+\hspace{1em} Matheus Menezes \\
+\hspace{1em} Rafael Magalhẽs \\
+\hspace{1em} Yuri Oliveira}
+\end{flushleft}
+\end{minipage}
+~
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Docente:} \\
+André Scolari
+\end{flushright}
+\end{minipage}\\[2cm]
+
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+{\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+\includegraphics[scale=0.3]{images/ufba_logo.jpg}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+
+\section{Introdução}
+
+O principal objetivo desse trabalho é simular o manipulador robótico UR5
+da \textit{universal robots} em uma missão de \textit{pick and place} de 
+uma lata. Para isso, se utilizou a \textit{framework} de robótica ROS 
+e o simulador gazebo. O modelo do robô utilizado é o próprio modelo da 
+farbicante, porém todo o código de cinemática, planejamento de trajetória e
+de missão foram desenvolvidos pela equipe deste trabalho.
+
+O desenvolvimento do projeto pode ser dividído em quatro partes, desenvolvimento de 
+cinemática direta, cinemática inversa, planejamento de trajetória e planejamento de 
+missão. A cinemática inversa foi utilizada para a calcular a posição de cada junta 
+para se alcançar as poses definidas para operação de \textit{pick and place}. O planejamento
+de trajetória foi desenvolvido para cálculo da posição de cada junta em cada instante de tempo
+da missão, de forma que o robô se movesse de forma suave. A cinemática direta foi desenvolvida
+somente para fins de estudo da modelagem do robô. Por fim, o planejamento da missão foi realizado
+para a integração de todos os sistemas na execução da tarefa.
+
+\section{Cinemática Direta}
+
+\section{Cinemática Inversa}
+
+\section{Planejamento de Trajetória}
+
+\section{Planejamento de Missão}
+
+\end{document}
