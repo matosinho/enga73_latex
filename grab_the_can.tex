@@ -254,8 +254,48 @@ No cálculo da cinemática inversa, a seguinte ordem foi seguida para obtenção
 \theta _4 = atan2 \left ( ^{3}\textrm{X}_{4y},^{3}\textrm{X}_{4x} \right )
 \end{equation}
 
-Note que $\theta_{1}$, $\theta_{5}$ e $\theta_{3}$ assumem dois valores possíveis. Para $\theta_{1}$, isso corresponde ao ombro estar na posição esquerda ou direita. Para $\theta_{5}$, isso implica no pulso do robô estar na posição superior ou inferior. Para $\theta_{3}$, os dois valores significam a possibilidade do cotovelo estar na posição superior ou inferior.
-Dadas essas possibilidades, o robô passa a ter então 8 combinações de ângulos de juntas para alcançar determinada pose: $2\theta_{1}$ × $2\theta_{5}$ × $1\theta_{6}$ × $2\theta_{3}$ × $1\theta_{2}$ × $1\theta_{4}$.
+Note que $\theta_{1}$, $\theta_{5}$ e $\theta_{3}$ assumem dois valores possíveis. Para $\theta_{1}$,
+isso corresponde ao ombro estar na posição esquerda ou direita (Figuras \ref{fig:shoulder-left} e 
+\ref{fig:shoulder-right}). Para $\theta_{5}$, isso implica no pulso do robô estar na posição superior
+ou inferior (Figuras \ref{fig:wrist-up} e \ref{fig:wrist-down}). Para $\theta_{3}$, os dois valores
+significam a possibilidade do cotovelo estar na posição superior ou inferior (Figuras \ref{fig:elbow-up}
+e \ref{fig:elbow-down}). Dadas essas possibilidades, o robô passa a ter então 8 combinações de ângulos de
+juntas para alcançar determinada pose: $2\theta_{1}$ × $2\theta_{5}$ × $1\theta_{6}$ × $2\theta_{3}$ × $1\theta_{2}$ × $1\theta_{4}$.
+
+\begin{figure}[htb!]
+	\centering
+	\caption{Possíveis posições para as juntas $\theta_{1}$, $\theta_{5}$ e $\theta_{3}$ do UR5}
+	\label{fig:solucoes-inversa}
+	\subfloat[Ombro na posição esquerda]{%
+		\includegraphics[width=0.3\textwidth]{images/shoulder_left.jpg}%
+		\label{fig:shoulder-left}%
+	}%
+	\hspace{1cm}%
+	\subfloat[Ombro na posição direita]{%
+		\includegraphics[width=0.3\textwidth]{images/shoulder_right.jpg}%
+		\label{fig:shoulder-right}%
+	}%
+	\vfill%
+	\subfloat[Pulso na posição superior]{%
+		\includegraphics[width=0.3\textwidth]{images/wrist_up.jpg}%
+		\label{fig:wrist-up}%
+	}%
+	\hspace{1cm}%
+	\subfloat[Pulso na posição inferior]{%
+		\includegraphics[width=0.3\textwidth]{images/wrist_down.jpg}%
+		\label{fig:wrist-down}%
+	}%
+	\vfill%
+	\subfloat[Cotovelo na posição superior]{%
+		\includegraphics[width=0.3\textwidth]{images/elbow_up.jpg}%
+		\label{fig:elbow-up}%
+	}%
+	\hspace{1cm}%
+	\subfloat[Cotovelo na posição inferior]{%
+		\includegraphics[width=0.3\textwidth]{images/elbow_down.jpg}%
+		\label{fig:elbow-down}%
+	}%
+\end{figure}
 
 \subsection{Validação}
 Para validar os métodos que calculam a cinemática direta e inversa do UR5, foram escolhidas
