@@ -42,6 +42,8 @@
 \usepackage{amssymb}
 \usepackage[position=bottom]{subfig}
 \usepackage[colorinlistoftodos]{todonotes}
+\usepackage{placeins}
+%\usepackage{float}
 
 \begin{document}
 \captionsetup{justification=centering}
@@ -107,6 +109,12 @@ André Scolari
 \end{titlepage}
 
 \tableofcontents
+\pagebreak
+
+\listoffigures
+\pagebreak
+
+\listoftables
 \pagebreak
 
 \section{Introdução}
@@ -194,10 +202,16 @@ pacote é explicado como utilizá-lo.
 
 \section{Cinemática do UR5}
 
+Os tópicos a seguir descrevem os métodos de cálculo da cinemática direta e inversa, realizados conforme \cite{Andersen2018}, 
+bem como foram realizadas as validações destes cálculos usando a integração ROS/Gazebo e por fim há breve discussão dos resultados obtidos. 
+
 \subsection{Cinemática Direta}
 \label{ssec:cinematica-direta}
 
-Para o cálculo da cinemática direta foram utilizados os parâmetros de Denavit-Harteberg modificados, de forma a facilitar o cálculo da transformação homogênea entre dois links consecutivos, cuja equação é representada por \ref{eq:dh-modificado} e os parâmetro do UR5 na Tabela \ref{label}.
+Para o cálculo da cinemática direta foram utilizados os parâmetros de Denavit-Hartenberg modificados,
+de forma a facilitar o cálculo da transformação homogênea entre dois links consecutivos, cuja equação
+é representada por \ref{eq:dh-modificado}. Os parâmetros mecânicos do UR5 utilizados para o cálculo da 
+cinemática direta foram retirados do pacote ROS da Universal Robots e encontram-se na Tabela \ref{tab:tabela-dh}.
 
 % dh parameters 
 \begin{equation}\label{eq:dh-modificado}
@@ -208,6 +222,22 @@ sin(\theta_i)sin(\alpha _{i-1})&  cos(\theta_i)sin(\alpha _{i-1}) & cos(\alpha _
 0 & 0 & 0 & 1
 \end{bmatrix}
 \end{equation}
+
+\begin{table}[h!]
+	\centering
+	\caption{Tabela de Denavit-Hartenberg modificado para o UR5}
+	\label{tab:tabela-dh}
+	\begin{tabular}{ c| c c c c }
+		$i$ & $\alpha_{i-1}$ & $a_{i-1}$ & $d_i$ & $\theta_i$ \\ 
+		\hline
+		1  & 0 & 0 & $d_1$ & $\theta_1$ \\  ​
+		​2 & $\alpha_1=90^{\circ}$ & 0 & 0 & $\theta_2$  \\
+		​3 & 0 & $a_2$  & 0 & $\theta_3$ \\
+		​4 & 0 & $a_3$ & $d_4$ & $\theta_4$ \\
+		​5 & $\alpha_4=90^{\circ}$ & 0 & $d_5$ & $\theta_5$ \\
+		​6 & $\alpha_5=-90^{\circ}$ & 0 & $d_6$ & $\theta_6$ 
+	\end{tabular}
+\end{table}
 
 \subsection{Cinemática Inversa}
 \label{ssec:cinematica-inversa}
@@ -262,46 +292,60 @@ significam a possibilidade do cotovelo estar na posição superior ou inferior (
 e \ref{fig:elbow-down}). Dadas essas possibilidades, o robô passa a ter então 8 combinações de ângulos de
 juntas para alcançar determinada pose: $2\theta_{1}$ × $2\theta_{5}$ × $1\theta_{6}$ × $2\theta_{3}$ × $1\theta_{2}$ × $1\theta_{4}$.
 
-\begin{figure}[htb!]
+\begin{figure}[h!]
 	\centering
-	\caption{Possíveis posições para as juntas $\theta_{1}$, $\theta_{5}$ e $\theta_{3}$ do UR5}
-	\label{fig:solucoes-inversa}
+	\caption{Possíveis posições para as juntas $\theta_{1}$ do UR5}
+	\label{fig:solucoes-inversa-shoulder}
 	\subfloat[Ombro na posição esquerda]{%
-		\includegraphics[width=0.3\textwidth]{images/shoulder_left.jpg}%
+		\includegraphics[width=0.4\textwidth]{images/shoulder_left.jpg}%
 		\label{fig:shoulder-left}%
 	}%
 	\hspace{1cm}%
 	\subfloat[Ombro na posição direita]{%
-		\includegraphics[width=0.3\textwidth]{images/shoulder_right.jpg}%
+		\includegraphics[width=0.4\textwidth]{images/shoulder_right.jpg}%
 		\label{fig:shoulder-right}%
 	}%
-	\vfill%
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\caption{Possíveis posições para as juntas $\theta_{5}$do UR5}
+	\label{fig:solucoes-inversa-wrist}
+	\hspace{1cm}%
 	\subfloat[Pulso na posição superior]{%
-		\includegraphics[width=0.3\textwidth]{images/wrist_up.jpg}%
+		\includegraphics[width=0.4\textwidth]{images/wrist_up.jpg}%
 		\label{fig:wrist-up}%
 	}%
 	\hspace{1cm}%
 	\subfloat[Pulso na posição inferior]{%
-		\includegraphics[width=0.3\textwidth]{images/wrist_down.jpg}%
+		\includegraphics[width=0.4\textwidth]{images/wrist_down.jpg}%
 		\label{fig:wrist-down}%
 	}%
-	\vfill%
+\end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\caption{Possíveis posições para as juntas $\theta_{3}$ do UR5}
+	\label{fig:solucoes-inversa-elbow}
 	\subfloat[Cotovelo na posição superior]{%
-		\includegraphics[width=0.3\textwidth]{images/elbow_up.jpg}%
+		\includegraphics[width=0.39\textwidth]{images/elbow_up.jpg}%
 		\label{fig:elbow-up}%
 	}%
 	\hspace{1cm}%
 	\subfloat[Cotovelo na posição inferior]{%
-		\includegraphics[width=0.3\textwidth]{images/elbow_down.jpg}%
+		\includegraphics[width=0.42\textwidth]{images/elbow_down.jpg}%
 		\label{fig:elbow-down}%
 	}%
 \end{figure}
 
+
+\FloatBarrier
 \subsection{Validação}
 Para validar os métodos que calculam a cinemática direta e inversa do UR5, foram escolhidas
 4 posições e orientações do \textit{end effector} do manipulador. As 4 \textit{poses} especificadas
 simulam 4 posicionamentos possíveis para a garra pegar a lata que se encontra na mesa à frente
-do manipulador, como pode ser visto na Figura \ref{fig:posicionamentos-da-garra}. Além disso,
+do manipulador, como pode ser visto nas Figuras \ref{fig:posicionamentos-da-garra-esq-dir} e 
+\ref{fig:posicionamentos-da-garra-sup-inf}. Além disso,
 foram adicionadas \textit{poses} intermediárias que antecedem o movimento final da garra
 (\textit{grasp}) e a volta do robô para a \textit{pose} de \textit{home}. Estas \textit{poses}
 intermediárias foram escolhidas para evitar colisões dos componentes mecânicos do manipulador,
@@ -310,41 +354,46 @@ principalmente do \textit{end effector}, com a lata de cerveja e/ou com as mesas
 
 \begin{figure}[htp!]
 	\centering
-	\caption{Posicionamentos da garra integrada ao UR5 utilizados para validação dos cálculos
-	de cinemática direta e inversa
-	}
-	\label{fig:posicionamentos-da-garra}
+	\caption{Posicionamentos da garra para pegar a lata pela esquerda ou direita}
+	\label{fig:posicionamentos-da-garra-esq-dir}
 	\subfloat[\textit{Grasp} pelo lado esquerdo]{%
-		\includegraphics[width=0.48\textwidth]{images/grasp_lateral_esquerda.jpg}%
-		\label{fig:frames-notacao-dh}%
+		\includegraphics[width=0.45\textwidth]{images/grasp_lateral_esquerda.jpg}%
+		\label{fig:grasp-lado-esquerdo}%
 	}%
-	\hfill%
+	\hspace{1cm}%
 	\subfloat[\textit{Grasp} pelo lado direito]{%
-		\includegraphics[width=0.48\textwidth]{images/grasp_lateral_direita.jpg}%
-		\label{fig:frames-notacao-urdf}%
-	}%
-	\vfill%
-	\subfloat[\textit{Grasp} pela frente]{%
-	\includegraphics[width=0.48\textwidth]{images/grasp_frente.jpg}%
-	\label{fig:frames-notacao-dh}%
-	}%
-	\hfill%
-	\subfloat[\textit{Grasp} pela parte superior]{%
-		\includegraphics[width=0.48\textwidth]{images/grasp_superior.jpg}%
-		\label{fig:frames-notacao-urdf}%
+		\includegraphics[width=0.45\textwidth]{images/grasp_lateral_direita.jpg}%
+		\label{fig:grasp-lado-direiro}%
 	}%
 \end{figure}
+
+\begin{figure}[h!]
+	\centering
+	\caption{Posicionamentos da garra para pegar a lata pela frente ou por cima}
+	\label{fig:posicionamentos-da-garra-sup-inf}
+	\subfloat[\textit{Grasp} pela frente]{%
+		\includegraphics[width=0.45\textwidth]{images/grasp_frente.jpg}%
+		\label{fig:grasp-pela-frente}%
+	}%
+	\hspace{1cm}%
+	\subfloat[\textit{Grasp} pela parte superior]{%
+		\includegraphics[width=0.45\textwidth]{images/grasp_superior.jpg}%
+		\label{fig:grasp-pela-superior}%
+	}%
+\end{figure}
+
+\FloatBarrier
 
 Na Tabela \ref{tab:conjuntos-de-valores-de-juntas} estão listados os valores de juntas usados na validação do cálculo de cinemática.
 As linhas foram preenchidas em cores para informar se uma determinada linha representa a \textit{pose}
 de \textit{grasping}, \textit{pre/post grasping} ou \textit{home}.
 
-\begin{table}[htp!]
+\begin{table}
 	\definecolor{home-gray}{gray}{0.95}
 	\definecolor{pre-post-grasping-gray}{gray}{0.75}
 	\definecolor{grasping-gray}{gray}{0.55}
 	\centering
-	\caption{Conjuntos dos valores de juntas utilizados para validação do cálculos de cinemática direta e 
+	\caption{Conjuntos dos valores de juntas utilizados para validação do cálculos de cinemática direta e
 		inversa do UR5
 	}
 	\label{tab:conjuntos-de-valores-de-juntas}
@@ -403,13 +452,15 @@ de \textit{grasping}, \textit{pre/post grasping} ou \textit{home}.
 	\end{tabular}
 \end{table}
 
-%\begin{table}[h!]
-%\end{table}
+\FloatBarrier
 
-Para tornar este cálculo automático, foi criado uma rotina de programação usando a linguagem Python, e APIs 
+Para tornar este cálculo automático, foi criado uma rotina de programação
+\footnote{\url{https://github.com/mateusmenezes95/ur5_simulation/blob/main/scripts/joints_controller_node.py}}
+usando a linguagem Python, e APIs 
 (\textit{Application Programming Interface}) e ferramentas fornecidas pelo \textit{framework}
 ROS. Os conjuntos de valores de juntas listados na Tabela \ref{tab:conjuntos-de-valores-de-juntas} foram inseridos em um arquivo
-de configuração com formato YAML (acrônimo recursivo para \textit{YAML Ain't Markup Language}).
+de configuração\footnote{\url{https://github.com/mateusmenezes95/ur5_simulation/blob/main/config/arm_kinematics.yaml}} 
+com formato YAML (acrônimo recursivo para \textit{YAML Ain't Markup Language}).
 Então para cada conjunto de valores de juntas lidos do arquivo de configuração, foi feito
 a comparação entre os valores calculados pelos métodos criados e os valores fornecidos pelo 
 ambiente de simulação que foram obtidos por intermédio do \textit{framework} ROS.
@@ -423,6 +474,8 @@ A Figura \ref{fig:fluxograma-rotina} ilustra o fluxo desta rotina.
 	\label{fig:fluxograma-rotina}
 	\includegraphics[width=\textwidth]{images/fluxograma_da_validacao_do_calculo_de_cinematica_direta_e_inversa.png}
 \end{figure} 
+
+\FloatBarrier
 
 Para o conjunto de juntas da Tabela \ref{tab:conjuntos-de-valores-de-juntas}, foram gerados os gráficos de comparação
 ilustrados nas Figuras \ref{fig:grafico-erro-juntas}, \ref{fig:grafico-erro-transalacao} e
@@ -522,7 +575,7 @@ onde os sobrescritos $s$ e $c$ representam os valores obtidos da simulação e d
 respectivamente.
 
 Observa-se na Figura \ref{fig:grafico-maximo-erros} que o maior erro absoluto obtido para o cálculo da
-cinemática direta foi de 0.00176 para o conjunto 10. Observa-se que os conjuntos que mais apresentaram
+cinemática direta foi de 0.00167 para o conjunto 4. Observa-se que os conjuntos que mais apresentaram
 erros foram os de \textit{home} números 0, 4, 10, 16 e 20. Uma hipótese para estes erros é o ruído que a
 simulação fornece quando as juntas estão na posição zero e, portanto, seria embutido no cálculo de erro
 um \textit{bias} com um valor milesimal.
@@ -530,15 +583,15 @@ um \textit{bias} com um valor milesimal.
 \begin{figure}[htp]
 	\centering
 	\caption{Comparação dos erros máximos obtidos no cálculo de cinemática direta e inversa
-		para cada conjunto $q_{i}$ de valores de juntas
+		para cada conjunto $i$ de valores de juntas
 	}
 	\label{fig:grafico-maximo-erros}
 	\includegraphics[width=\textwidth]{images/maximos_erros.png}
 \end{figure}
 
 O erro de translação do cálculo da Cinemática direta do UR5 pode ser visualizado na Figura \ref{fig:grafico-erro-transalacao}.
-Nota-se que o erro máximo foi de aproximadamente 0,4 mm para o conjunto 10. Observa-se novamente também que os maiores erros estão nos conjuntos
-de \textit{home} (0, 4, 10, 16 e 20). Vale salientar que em uma aplicação real o erro na posição do \textit{end effector} pode ser
+Nota-se que o erro máximo foi de aproximadamente 0,4 mm para o conjunto 4. Observa-se novamente também que os maiores erros estão nos conjuntos
+de \textit{home} (0, 4, 10, 16 e 20). Entretanto, vale salientar que em uma aplicação real o erro na posição do \textit{end effector} pode ser
 desconsiderado, já que nessa posição o manipulador não executa nenhuma tarefa de precisão.
 
 \begin{figure}[htp]
@@ -548,16 +601,18 @@ desconsiderado, já que nessa posição o manipulador não executa nenhuma taref
 	\includegraphics[width=\textwidth]{images/erros_de_translacao.png}
 \end{figure}
 
+\FloatBarrier
+
 Na Figura \ref{fig:grafico-erro-juntas} verifica-se que do
 conjunto 11 ao 15 há um erro quase que constante para a junta $\theta_{5}$, modificando apenas no conjunto
 13 (conjunto de \textit{grasp} conforme Tabela \ref{tab:conjuntos-de-valores-de-juntas}). Este erro é explicado
 devido principalmente a consideração da posição do UR5. Conforme explicado em \ref{ssec:cinematica-inversa} 
 o valor de $\theta_{5}$ é influenciado pela posição do pulso do robô, que para o resultado da Figura \ref{fig:grafico-erro-transalacao}
-foi considerada a posição superior. Fazendo um recorte da Tabela \ref{tab:conjuntos-de-valores-de-juntas}
-e gerando a nova Tabela \ref{tab:conjuntos-de-valores-de-juntas-recortado} e considerando agora o pulso na
-posição inferior, obtemos o gráfico mostrado na Figura \ref{fig:grafico-erro-juntas-set-2}. Verifica-se que
-agora o erro se aproxima de zero para a maioria das juntas, com exceção para os conjuntos de \textit{home}. A diferença
-dos resultados entre as Figuras \ref{fig:grafico-erro-juntas} e \ref{fig:grafico-erro-juntas-set-2} pode ser
+foi considerada a posição superior. Fazendo um recorte da Tabela \ref{tab:conjuntos-de-valores-de-juntas}, 
+gerando a nova Tabela \ref{tab:conjuntos-de-valores-de-juntas-recortado} e considerando agora o pulso na
+posição inferior, obtemos os gráficos mostrados nas Figuras \ref{fig:max-erros-set-2} e \ref{fig:grafico-erro-juntas-set-2}.
+Verifica-se agora que os erros se aproximam de zero para a maioria das juntas, com exceção para os conjuntos de \textit{home}.
+A diferença dos resultados entre as Figuras \ref{fig:grafico-erro-juntas} e \ref{fig:grafico-erro-juntas-set-2} pode ser
 explicada devido as múltiplas soluções encontradas no cálculo da cinemática inversa para o mesmo valor de junta,
 conforme explicado no tópico \ref{ssec:cinematica-inversa}.
 
@@ -568,12 +623,14 @@ conforme explicado no tópico \ref{ssec:cinematica-inversa}.
 	\includegraphics[width=\textwidth]{images/erro_do_angulo_das_juntas.png}
 \end{figure}
 
+\FloatBarrier
+
 \begin{table}[htp!]
 	\definecolor{home-gray}{gray}{0.95}
 	\definecolor{pre-post-grasping-gray}{gray}{0.75}
 	\definecolor{grasping-gray}{gray}{0.55}
 	\centering
-	\caption{Conjuntos dos valores de juntas utilizados para validação do cálculos de cinemática direta e 
+	\caption{Conjuntos dos valores de juntas recortados utilizados para validação do cálculos de cinemática direta e 
 		inversa do UR5
 	}
 	\label{tab:conjuntos-de-valores-de-juntas-recortado}
@@ -604,6 +661,13 @@ conforme explicado no tópico \ref{ssec:cinematica-inversa}.
 	\end{tabular}
 \end{table}
 
+\begin{figure}[htp]
+	\centering
+	\caption{Comparação dos erros máximos da cinemática direta e inversa
+		das 6 juntas do UR5 para cada conjunto da Tabela \ref{tab:conjuntos-de-valores-de-juntas-recortado}}
+	\label{fig:max-erros-set-2}
+	\includegraphics[width=\textwidth]{images/maximos_erros_set_2.png}
+\end{figure}
 
 \begin{figure}[htp]
 	\centering
@@ -612,9 +676,11 @@ conforme explicado no tópico \ref{ssec:cinematica-inversa}.
 	\includegraphics[width=\textwidth]{images/erro_do_angulo_das_juntas_set_2.png}
 \end{figure}
 
-
 \section{Planejamento de Trajetória}
 
 \section{Planejamento de Missão}
+
+\bibliographystyle{apalike}
+\bibliography{references.bib}
 
 \end{document}
