@@ -677,8 +677,62 @@ conforme explicado no tópico \ref{ssec:cinematica-inversa}.
 \end{figure}
 
 \section{Planejamento de Trajetória}
+O planjedor de trajetória tem a função de mapear a posição de cada junta 
+durante o movimento. Esse componente deve ser utilizado afim de se suavizar o 
+movimento dos motores para se evitar colisões e \textit{stress} desnecessário 
+das juntas. Nesse trabalho, dois planejadores foram desenvolvidos e as trajetórias
+planejadas e executadas foram comparadas. Os planejadores escolhidos foram o 
+\textit{Linear Segment Parabolic Blend} (LSPB), o qual se gera uma trajetória trapezoidal
+com velocidade e aceleração constantes, e o \textit{Cubic Polynomial} (polinomial),
+ o qual se gera uma função polinomial cúbica de posição para ser seguida pelas juntas.
 
-\section{Planejamento de Missão}
+A implementação foi feita com base no livro do Mark Spong, de forma que ao se instanciar
+o planejador, as curvas de posição, velocidade e aceleração são calculadas. Na imagem abaixo,
+pode ser visto a comparação das trajetórias calculadas com o lspb em cima e o polinomial em baixo.
+Se definiu a velocidade inicial e final do planejador polinomial como zero, visto que o LSPB já tem
+essa restrição, então não seria uma comparação muito válida caso as condições iniciais e finais sejam
+diferentes. Para o LSPB, se definiu uma velocidade arbitrária de -184 rad por segundo. Por fim, para 
+ambos os planjadores, se determinou a posição inicial e final como 1.5 rad e -1.2 rad, e o tempo
+inicial e final como 35.2 e 37.4 segundos. 
+
+\begin{figure}[htp]
+	\centering
+	\caption{Planejamento de trajetória pelo método LSPB em cima e polinomial em baixo}
+	\label{fig:comparacao-planejamento}
+	\includegraphics[width=\textwidth]{images/comparisson.png}
+\end{figure}
+
+Após a validação dos algoritmos de planjemento, estes foram testados em simulação para o deslocamento
+do UR5. Abaixo, é possivel visualizar os gráficos do deslocamento de cada uma das 6 juntas utilizando
+diferentes estratégias. A Figura\ref{fig:execucao-lspb} representa o movimento das juntas utilizando LSPB, 
+Figura \ref{fig:execucao-polinomial} representa o movimento das juntas utilizando o planejamento polinomial, 
+por fim, a Figura \ref{fig:execucao-pid} representa o movimento do braço sem nenhum planjedor, somente com 
+o controle de posição das juntas.
+
+\begin{figure}[htp]
+	\centering
+	\caption{Execução de trajetória pelo método LSPB}
+	\label{fig:execucao-lspb}
+	\includegraphics[width=\textwidth]{images/lspb.png}
+\end{figure}
+
+\begin{figure}[htp]
+	\centering
+	\caption{Execução de trajetória pelo método polinomial}
+	\label{fig:execucao-polinomial}
+	\includegraphics[width=\textwidth]{images/polinomial.png}
+\end{figure}
+
+\begin{figure}[htp]
+	\centering
+	\caption{Execução de trajetória sem planejamento}
+	\label{fig:execucao-pid}
+	\includegraphics[width=\textwidth]{images/no_planner.png}
+\end{figure}
+
+Dessa forma, se conclue esse trabalho, no qual foi possível realizar a missão de 
+se aproximar de uma lata, utilizando cinemática inversa e planejador de trajetórias 
+próprios. 
 
 \bibliographystyle{apalike}
 \bibliography{references.bib}
